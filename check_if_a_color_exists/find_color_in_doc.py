@@ -16,12 +16,13 @@ for para in document.paragraphs:
 	for run in para.runs:
 			
 		final_color=None
-		if run.style.font.color.rgb:
-			final_color=run.style.font.color.rgb
-
+		
 		if run.font.color.rgb:
 			final_color=run.font.color.rgb
 
+		if run.style.font.color.rgb:
+			final_color=run.style.font.color.rgb
+			
 		if not final_color:
 			final_color=para_color
 
