@@ -1,7 +1,7 @@
-from docx import Document
+﻿from docx import Document
 from docx.shared import RGBColor
 
-document =  Document('/home/navkrishna/Downloads/demo.docx') #path of document file to open
+document =  Document('/home/navkrishna/Downloads/demo.docx')
 
 color_to_check=RGBColor(0x4F, 0x81, 0xBD) #add the hex code of the color to find
 

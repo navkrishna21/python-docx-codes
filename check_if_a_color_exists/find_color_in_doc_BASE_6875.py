@@ -1,7 +1,7 @@
-from docx import Document
+﻿from docx import Document
 from docx.shared import RGBColor
 
-document =  Document('/home/navkrishna/Downloads/demo.docx') #path of document file to open
+document =  Document('/home/navkrishna/Downloads/demo.docx')
 
 color_to_check=RGBColor(0x4F, 0x81, 0xBD) #add the hex code of the color to find
 
@@ -16,13 +16,12 @@ for para in document.paragraphs:
 	for run in para.runs:
 			
 		final_color=None
-		
+		if run.style.font.color.rgb:
+			final_color=run.style.font.color.rgb
+
 		if run.font.color.rgb:
 			final_color=run.font.color.rgb
 
-		if run.style.font.color.rgb:
-			final_color=run.style.font.color.rgb
-			
 		if not final_color:
 			final_color=para_color
 
