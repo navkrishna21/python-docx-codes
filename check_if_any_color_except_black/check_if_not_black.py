@@ -1,6 +1,7 @@
 from docx import Document
 from docx.shared import RGBColor
 from colorsys import rgb_to_hsv 
+from docx.enum.dml import MSO_COLOR_TYPE
 
 def is_black(color):
 	r=int( color[:2],16 )
@@ -24,18 +25,29 @@ def is_color_found(document):
 			para_color=para.style.font.color.rgb
 		
 		for run in para.runs:
-				
-			final_color=None
-                                
-			if run.font.color.rgb:
-				final_color=run.font.color.rgb
+
+			if run.text.isspace():
+				continue	
 			
-			if run.style.font.color.rgb:
-				final_color=run.style.font.color.rgb
+			final_color=None  
+  
+			if run.font.color.rgb or run.font.color.type:
+
+				if run.font.color.type == MSO_COLOR_TYPE.AUTO:
+					final_color=RGBColor(0x00, 0x00, 0x00)
+				else:
+					final_color=run.font.color.rgb
+			
+			if run.style.font.color.rgb or run.style.font.color.type:
+
+				if run.style.font.color.type == MSO_COLOR_TYPE.AUTO:
+					final_color=RGBColor(0x00, 0x00, 0x00)
+				else:	
+					final_color=run.style.font.color.rgb
 
 			if not final_color:
-                                final_color=para_color
-			
+				final_color=para_color  
+
 			if final_color and not is_black( str( final_color) ) :
 				color_found=True
 				#print(run.text + " " + str(final_color))
@@ -45,7 +57,7 @@ def is_color_found(document):
 	return color_found
 
 
-document =  Document("/home/navkrishna/Downloads/demo.docx")
+document =  Document("/home/navkrishna/Downloads/Summer Internship Report.docx")
 
 if is_color_found(document):
 	print("your Doc may contain blue/red text")
